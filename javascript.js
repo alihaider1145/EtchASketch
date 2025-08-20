@@ -1,28 +1,18 @@
 const gridHolder = document.querySelector(".gridHolder")
-
 const newGridBtn = document.querySelector(".newGridBtn");
-
 const rgbTrailBtn = document.querySelector(".rgbTrailBtn");
-
 const blackTrailBtn = document.querySelector(".blackTrailBtn");
-
 const resetGridBtn = document.querySelector(".resetGridBtn");
 
 let gridSize = 16;
 
 newGrid(gridSize);
 
-function resetGrid() {
-    const squares = document.querySelectorAll(".square");
-    squares.forEach(square => {
-        square.style.backgroundColor = "white";
-    });
-}
-
+newGridBtn.addEventListener("click", ()=>{
+    newGrid(prompt("Enter the number of grids(<100):"));
+})
 blackTrailBtn.addEventListener("click",blackTrail);
-
 rgbTrailBtn.addEventListener("click", rgbTrail);
-
 resetGridBtn.addEventListener("click", resetGrid)
 
 function newGrid(gridSize){
@@ -38,6 +28,14 @@ function newGrid(gridSize){
         square.style.height = squareSize + "px";
     }
 }
+
+function resetGrid() {
+    const squares = document.querySelectorAll(".square");
+    squares.forEach(square => {
+        square.style.backgroundColor = "white";
+    });
+}
+
 
 function blackTrail(){
     gridHolder.addEventListener("mouseover", (event)=>{
