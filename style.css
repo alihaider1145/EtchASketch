@@ -1,0 +1,11 @@
+.square{
+    height: 56px;
+    width: ()px;
+    border: 2px solid black;
+}
+
+.gridHolder{
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+}
