@@ -16,7 +16,7 @@ rgbTrailBtn.addEventListener("click", rgbTrail);
 resetGridBtn.addEventListener("click", resetGrid)
 
 function newGrid(gridSize){
-    let squareSize = ((300/gridSize)-4);
+    let squareSize = ((500/gridSize)-2);
     while(gridHolder.firstChild){
         gridHolder.removeChild(gridHolder.firstChild);
     }
