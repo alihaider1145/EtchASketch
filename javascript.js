@@ -35,6 +35,7 @@ function resetGrid() {
     const squares = document.querySelectorAll(".square");
     squares.forEach(square => {
         square.style.backgroundColor = "white";
+        square.style.opacity = 1;
     });
 }
 
