@@ -5,6 +5,10 @@ const blackTrailBtn = document.querySelector(".blackTrailBtn");
 const resetGridBtn = document.querySelector(".resetGridBtn");
 const shadeEffectBtn = document.querySelector(".shadeEffectBtn")
 
+let rgbActive = false;
+let blackActive = false;
+let shadeActive = false;
+
 let gridSize = 16;
 
 newGrid(gridSize);
@@ -39,28 +43,40 @@ function resetGrid() {
     });
 }
 
-
-function blackTrail(){
-    gridHolder.addEventListener("mouseover", (event)=>{
-         event.target.style.backgroundColor = 'black';
-    });
-    console.log("Black activated");
-}
-
-function rgbTrail(){
-    gridHolder.addEventListener("mouseover", (event)=>{
-         event.target.style.backgroundColor = `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`;
-    });
-    console.log("rgb activated")
-}
-
-function shadeEffect(){
-    gridHolder.addEventListener("mouseover", (event)=>{
-        if(event.target.style.opacity > 0){
+gridHolder.addEventListener("mouseover", event => {
+    if (blackActive){
+        event.target.style.backgroundColor = 'black';
+        event.target.style.opacity = '1';
+    }
+    else if(rgbActive){
+        event.target.style.backgroundColor = `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`;
+        event.target.style.opacity = '1';
+    }
+    else if(shadeActive){
+        if((event.target.style.opacity > 0) && (event.target.style.backgroundColor === 'black')){
             event.target.style.opacity = parseFloat(event.target.style.opacity) + 0.1;
         }
         else {
             event.target.style.backgroundColor = 'black';
-            event.target.style.opacity = '0.1'
-        }});
+            event.target.style.opacity = '0.1';
+        }
+    }
+});
+
+function blackTrail(){
+    rgbActive = false;
+    blackActive = true;
+    shadeActive = false;
+}
+
+function rgbTrail(){
+    rgbActive = true;
+    blackActive = false;
+    shadeActive = false;
+}
+
+function shadeEffect(){
+    rgbActive = false;
+    blackActive = false;
+    shadeActive = true;
 }
