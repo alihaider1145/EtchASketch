@@ -1,10 +1,9 @@
 body{
     background-color: #c8d8e4;
+    margin: 0;
 }
 
 .square{
-    height: 56px;
-    width: ()px;
     border: 1px solid black;
 }
 
@@ -12,14 +11,17 @@ body{
     display: flex;
     flex-wrap: wrap;
     background-color: #ffffff;
-    width: 500px;
-    height: 500px;
+    min-width: 300px;
+    min-height: 300px;
+    width: 50vw;
+    height: 50vw;
     margin: auto; 
 }
 
 .btnContainer{
     display: flex;
     justify-content: space-evenly;
+    margin: 8px;
 }
 
 button{

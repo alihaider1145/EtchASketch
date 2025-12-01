@@ -8,8 +8,9 @@ const shadeEffectBtn = document.querySelector(".shadeEffectBtn")
 let rgbActive = false;
 let blackActive = false;
 let shadeActive = false;
+let isDraw = false;
 
-let gridSize = 16;
+let gridSize = 5;
 
 newGrid(gridSize);
 
@@ -22,7 +23,7 @@ resetGridBtn.addEventListener("click", resetGrid);
 shadeEffectBtn.addEventListener("click", shadeEffect)
 
 function newGrid(gridSize){
-    let squareSize = ((500/gridSize)-2);
+    let squareSize = (((gridHolder.offsetWidth)/gridSize)-2);
     while(gridHolder.firstChild){
         gridHolder.removeChild(gridHolder.firstChild);
     }
@@ -30,7 +31,7 @@ function newGrid(gridSize){
         const square = document.createElement("div");
         square.classList.add("square");
         gridHolder.appendChild(square);
-        square.style.width = squareSize + "px";
+        square.style.width = Math.floor(squareSize) + "px";
         square.style.height = squareSize + "px";
     }
 }
@@ -44,6 +45,30 @@ function resetGrid() {
 }
 
 gridHolder.addEventListener("mouseover", event => {
+    if(!event.target.classList.contains("square")) return;
+    else if (blackActive){
+        event.target.style.backgroundColor = 'black';
+        event.target.style.opacity = '1';
+    }
+    else if(rgbActive){
+        event.target.style.backgroundColor = `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`;
+        event.target.style.opacity = '1';
+    }
+    else if(shadeActive){
+        if((event.target.style.opacity > 0) && (event.target.style.backgroundColor === 'black')){
+            event.target.style.opacity = parseFloat(event.target.style.opacity) + 0.1;
+        }
+        else {
+            event.target.style.backgroundColor = 'black';
+            event.target.style.opacity = '0.1';
+        }
+    }
+});
+
+gridHolder.addEventListener("touchstart", event => {
+    event.preventDefault();
+    isDraw = true;
+
     if (blackActive){
         event.target.style.backgroundColor = 'black';
         event.target.style.opacity = '1';
@@ -61,6 +86,37 @@ gridHolder.addEventListener("mouseover", event => {
             event.target.style.opacity = '0.1';
         }
     }
+});
+
+gridHolder.addEventListener("touchmove", event => {
+    event.preventDefault();
+    let targetElement = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY);
+
+    if (!isDraw) return;
+    if (targetElement && targetElement.classList.contains("square")) {
+        if (blackActive){
+            targetElement.style.backgroundColor = 'black';
+            targetElement.style.opacity = '1';
+        }
+        else if(rgbActive){
+            targetElement.style.backgroundColor = `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`;
+            targetElement.style.opacity = '1';
+        }
+        else if(shadeActive){
+            if((targetElement.style.opacity > 0) && (targetElement.style.backgroundColor === 'black')){
+                targetElement.style.opacity = parseFloat(targetElement.style.opacity) + 0.1;
+            }
+            else {
+                targetElement.style.backgroundColor = 'black';
+                targetElement.style.opacity = '0.0000000001';
+            }
+        }
+    }
+});
+
+gridHolder.addEventListener("touchend", event => {
+    event.preventDefault();
+    isDraw = false;
 });
 
 function blackTrail(){
